@@ -1,45 +1,102 @@
-# Spring Boot Project Setup Guide
+# Spring Boot 3.4.3 Project Setup Guide (Java 17)
 
 ## Overview
-This guide provides comprehensive instructions for creating a Spring Boot project using Maven. Spring Boot simplifies the development of production-ready applications by providing a convention-over-configuration approach with sensible defaults.
+This guide provides comprehensive instructions for creating a Spring Boot 3.4.3 project using Maven. Spring Boot simplifies the development of production-ready applications by providing a convention-over-configuration approach with sensible defaults.
 
 ## Prerequisites
 Ensure that you have the following installed on your system:
-- **Java Development Kit (JDK)** (version 11 or later)
-- **Apache Maven** (version 3.6 or later)
+- **Java Development Kit (JDK)** (version 17 or later, required for Spring Boot 3.x)
+- **Apache Maven** (version 3.8.0 or later)
 - **An internet connection** (to fetch dependencies from Maven Central Repository)
 - **IDE** (Optional: IntelliJ IDEA, Eclipse, or VS Code with Spring extensions)
 
 ## Methods to Create a Spring Boot Project
 
-### Method 1: Using Spring Boot Maven Archetype
-To create a Spring Boot project directly with Maven:
+### Method 1: Using Maven for Spring Boot
 
+After testing multiple archetypes, it appears that many Spring Boot archetypes in Maven Central are either outdated or unavailable. Instead, let's use a more reliable approach with two steps:
+
+#### Step 1: Create a basic Maven project
 ```sh
 mvn archetype:generate \
     -DgroupId=com.phdgroup \
     -DartifactId=springboot-project \
-    -DarchetypeGroupId=com.github.hordavid \
-    -DarchetypeArtifactId=spring-boot-archetype \
-    -DarchetypeVersion=2.7.8 \
-    -DspringBootVersion=3.4.3 \
+    -DarchetypeArtifactId=maven-archetype-quickstart \
+    -DarchetypeVersion=1.4 \
     -DinteractiveMode=false
 ```
 
-Alternatively, you can use this archetype:
+#### Step 2: Convert it to a Spring Boot project (version 3.4.3 with Java 17)
+After generating the basic project, navigate to the project directory and replace the contents of the `pom.xml` file with the following:
 
-```sh
-mvn archetype:generate \
-    -DgroupId=com.phdgroup \
-    -DartifactId=springboot-project \
-    -DarchetypeGroupId=org.mjamieson \
-    -DarchetypeArtifactId=spring-boot-web-archetype \
-    -DarchetypeVersion=1.0.2 \
-    -DspringBootVersion=3.4.3 \
-    -DinteractiveMode=false
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    
+    <groupId>com.phdgroup</groupId>
+    <artifactId>springboot-project</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springboot-project</name>
+    <description>Spring Boot Project for PHD Group</description>
+    
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
 ```
 
-**Note**: These archetypes create a Spring Boot ready project structure with proper dependencies in the `pom.xml` file.
+Then create a main application class in `src/main/java/com/phdgroup/App.java`:
+
+```java
+package com.phdgroup;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class App {
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
+}
 
 ### Method 2: Using Spring Initializr (Recommended)
 Spring Initializr provides a more streamlined approach to create Spring Boot projects with the dependencies you need.
@@ -49,7 +106,8 @@ Spring Initializr provides a more streamlined approach to create Spring Boot pro
 2. Configure your project:
    - Project: Maven
    - Language: Java
-   - Spring Boot version: Select the desired version
+   - Spring Boot version: **3.4.3**
+   - Java: **17**
    - Group: com.phdgroup
    - Artifact: springboot-project
    - Dependencies: Add necessary dependencies (e.g., Spring Web, Spring Data JPA, etc.)
@@ -164,6 +222,7 @@ public class SpringBootProjectApplication {
 Create a basic controller to verify your setup:
 
 ```java
+// Java 17 compatible code with Spring Boot 3.4.3
 package com.phdgroup.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -174,7 +233,7 @@ public class HelloController {
     
     @GetMapping("/hello")
     public String hello() {
-        return "Hello, Spring Boot!";
+        return "Hello, Spring Boot 3.4.3!";
     }
 }
 ```
@@ -516,4 +575,3 @@ This guide walks through setting up a Spring Boot application using Maven. With 
 ## Additional Resources
 - [Official Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 - [Spring Guides](https://spring.io/guides)
-- [Baeldung Spring Boot Tutorials](https://www.baeldung.com/spring-boot)
