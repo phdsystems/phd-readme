@@ -106,7 +106,43 @@ pnpm -v
 
 ---
 
-## 5️⃣ Troubleshooting
+## 5️⃣ Avoid Mixing Package Managers
+Using multiple package managers in a project can cause dependency conflicts. If you find both `package-lock.json` (npm) and `pnpm-lock.yaml` (pnpm) in your project, follow these steps:
+
+### **🔹 Standardize on One Package Manager**
+#### **Use npm (if originally used npm)**
+1. Remove conflicting files:
+   ```sh
+   rm -rf pnpm-lock.yaml node_modules
+   ```
+2. Reinstall dependencies:
+   ```sh
+   npm install
+   ```
+
+#### **Use pnpm (if originally used pnpm)**
+1. Remove conflicting files:
+   ```sh
+   rm -rf package-lock.json node_modules
+   ```
+2. Reinstall dependencies:
+   ```sh
+   pnpm install
+   ```
+
+### **🔹 Verify Only One Lock File Exists**
+After the cleanup, check that only **one** of the lock files remains:
+```sh
+ls -la | grep "lock"
+```
+- If using **npm**, you should only see `package-lock.json`.
+- If using **pnpm**, you should only see `pnpm-lock.yaml`.
+
+This will prevent issues like dependencies being moved to `node_modules/.ignored` and ensure a smooth package management experience.
+
+---
+
+## 6️⃣ Troubleshooting
 If `nvm` is not found:
 1. **Ensure `.bashrc` is loaded correctly**:
    ```sh
