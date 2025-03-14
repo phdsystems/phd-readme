@@ -142,7 +142,41 @@ This will prevent issues like dependencies being moved to `node_modules/.ignored
 
 ---
 
-## 6️⃣ Troubleshooting
+## 6️⃣ npm vs. pnpm: Which One is Better?
+### **Performance & Speed**
+- **🚀 pnpm** is faster due to its efficient package linking system.
+- **🐢 npm** is slower as it installs full copies of dependencies.
+
+### **Disk Usage**
+- **💾 pnpm** saves disk space using a shared global store.
+- **🗂️ npm** duplicates dependencies across projects, using more space.
+
+### **Dependency Handling**
+- **🔗 pnpm** enforces strict version control for better consistency.
+- **🔄 npm** uses a looser dependency resolution.
+
+### **Monorepo Support**
+- **🏗️ pnpm** has built-in workspace support, making it better for monorepos.
+- **🔨 npm** supports workspaces but is less optimized.
+
+### **Final Verdict**
+| Feature | **pnpm** 🚀 | **npm** 🐢 |
+|---------|------------|-----------|
+| Speed | ✅ Faster | ❌ Slower |
+| Disk Usage | ✅ Efficient | ❌ Uses more space |
+| Dependency Handling | ✅ Strict & Reliable | ❌ Looser control |
+| Monorepo Support | ✅ Built-in | ❌ Less optimized |
+| Compatibility | ✅ Good, but newer | ✅ Universal |
+
+**Use `pnpm` if** 🚀: You want **faster installs, better disk efficiency, strict dependency handling, and monorepo support**.
+
+**Use `npm` if** 🛠️: You need **maximum compatibility with older projects or prefer the standard package manager**.
+
+🚀 **Overall, `pnpm` is the better choice for most modern projects!**
+
+---
+
+## 7️⃣ Troubleshooting
 If `nvm` is not found:
 1. **Ensure `.bashrc` is loaded correctly**:
    ```sh
@@ -158,3 +192,4 @@ If `nvm` is not found:
 
 ## 🎉 Next Steps
 Once Node.js, npm, and pnpm are installed correctly, you can proceed with other setups like installing dependencies for your project using `npm install` or `pnpm install`.
+
