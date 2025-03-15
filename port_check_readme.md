@@ -1,65 +1,122 @@
-# Port Status Check Script
+# Port Checking and Resolution Guide
 
 ## Overview
-This script helps you check if a specific port is open, blocked, or in use. It verifies:
-- Whether the port is actively listening.
-- If the port is reachable.
-- Which process is using the port.
-- Whether firewall rules are blocking the port.
-- Saves results in a log file for future reference.
+This guide provides steps to identify and resolve issues related to port conflicts, particularly when encountering errors like:
 
-## Features
-- Uses `netstat`, `ss`, `nc (netcat)`, `lsof`, and `ufw` (if installed) to check port status.
-- Outputs results to the terminal and logs them in `port_status_log.txt`.
-- Works on Linux and MacOS.
-- Requires `sudo` for firewall checks.
+```
+Bind for 0.0.0.0:8000 failed: port is already allocated
+```
 
-## Installation
-1. Download the script:
-   ```bash
-   wget -O check_port_status.sh "https://raw.githubusercontent.com/your-repo/path/to/check_port_status.sh"
-   ```
-   or
-   ```bash
-   curl -o check_port_status.sh "https://raw.githubusercontent.com/your-repo/path/to/check_port_status.sh"
-   ```
+Such errors occur when another process is already using the specified port.
 
-2. Give it execution permission:
-   ```bash
-   chmod +x check_port_status.sh
-   ```
+---
 
-## Usage
-Run the script with a port number:
+## Checking for Processes Using a Port
+### Linux / macOS
+To check which process is using a specific port (e.g., 8000):
 ```bash
-./check_port_status.sh 5555
+sudo lsof -i :8000
+```
+If needed, kill the process:
+```bash
+sudo kill -9 <PID>
 ```
 
-## Output Example
-If port **5555** is open, you'll see something like this:
+### Windows
+To find the process using port 8000:
+```cmd
+netstat -aon | findstr :8000
 ```
-🔹 Checking Listening Ports (netstat)...
-tcp        0      0 0.0.0.0:5555            0.0.0.0:*               LISTEN      1234/python3
-
-🔹 Checking if Port is Reachable (nc)...
-Connection to 127.0.0.1 5555 port [tcp/*] succeeded!
-
-🔹 Checking Running Services (lsof)...
-nc       1234 user  5u  IPv4 12345678  0t0  TCP *:5555 (LISTEN)
-
-🔹 Checking Firewall Rules...
-5555/tcp ALLOW Anywhere
-
-✅ Check completed! Results saved in port_status_log.txt
+To terminate the process:
+```cmd
+taskkill /PID <PID> /F
 ```
 
-## Troubleshooting
-- If no output appears, the port may not be open.
-- If you see `Connection refused`, the application may not be running or is blocked by the firewall.
-- Use `sudo ufw allow 5555` to allow the port (if using UFW).
+### Docker
+If using Docker, list running containers:
+```bash
+docker ps
+```
+Stop or remove the conflicting container:
+```bash
+docker stop <container_id>
+docker rm -f <container_id>
+```
 
-## License
-This script is open-source and can be modified or distributed under the MIT License.
+---
 
-## Author
-Developed by Amu Hlongwane, PHD Quantitative Analytics.
+## Restarting Services
+If a service (e.g., Apache, Nginx, MySQL) is using the port, restart it:
+```bash
+sudo systemctl restart <service_name>
+```
+
+To check active services:
+```bash
+sudo systemctl list-units --type=service
+```
+
+---
+
+## Changing the Port
+If the port is in use and cannot be freed, change the port when running your application.
+
+### Python (Simple HTTP Server)
+```bash
+python -m http.server 8080
+```
+
+### Node.js
+```bash
+PORT=8080 node server.js
+```
+
+### Docker
+Run the container on a different port:
+```bash
+docker run -p 8080:80 my_container
+```
+
+---
+
+## Automating Port Checking and Resolution
+For frequent issues, you can create a script to automate port checking and killing the process.
+
+### Linux/macOS Script:
+```bash
+#!/bin/bash
+PORT=8000
+PID=$(sudo lsof -t -i:$PORT)
+if [ "$PID" ]; then
+    echo "Port $PORT is in use by PID $PID. Killing process..."
+    sudo kill -9 $PID
+else
+    echo "Port $PORT is free."
+fi
+```
+Save it as `check_port.sh`, give it execute permissions, and run it:
+```bash
+chmod +x check_port.sh
+./check_port.sh
+```
+
+### Windows Script:
+Create a file `check_port.bat` with:
+```cmd
+@echo off
+set PORT=8000
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :%PORT%') do (
+    echo Port %PORT% is in use by PID %%a
+    taskkill /PID %%a /F
+)
+```
+Run it in Command Prompt:
+```cmd
+check_port.bat
+```
+
+---
+
+## Conclusion
+By following these steps, you can effectively identify and resolve port conflicts, ensuring smooth operation of your applications and services.
+
