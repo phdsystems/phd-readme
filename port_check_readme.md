@@ -21,6 +21,10 @@ If needed, kill the process:
 ```bash
 sudo kill -9 <PID>
 ```
+Alternatively, use `netstat`:
+```bash
+netstat -tulnp | grep :8000
+```
 
 ### Windows
 To find the process using port 8000:
@@ -32,7 +36,33 @@ To terminate the process:
 taskkill /PID <PID> /F
 ```
 
-### Docker
+---
+
+## Checking Active Ports and Connections
+
+### Linux / macOS
+List all active ports:
+```bash
+netstat -tulnp
+```
+List all listening ports:
+```bash
+ss -tuln
+```
+
+### Windows
+List all active ports and associated processes:
+```cmd
+netstat -ano
+```
+List only listening ports:
+```cmd
+netstat -an | findstr LISTEN
+```
+
+---
+
+## Docker
 If using Docker, list running containers:
 ```bash
 docker ps
@@ -41,6 +71,10 @@ Stop or remove the conflicting container:
 ```bash
 docker stop <container_id>
 docker rm -f <container_id>
+```
+To find which container is using a port:
+```bash
+docker ps --filter "publish=8000"
 ```
 
 ---
