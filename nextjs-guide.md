@@ -26,7 +26,7 @@ During setup, you would normally be prompted with configuration questions below.
 
 ## 2. Navigate to Your Project
 ```bash
-cd my-next-app
+cd my-nextjs15-app
 ```
 
 ## 3. Project Structure
