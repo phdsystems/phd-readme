@@ -8,10 +8,17 @@
 Using the official create-next-app tool (recommended):
 
 ```bash
-npx create-next-app@latest my-next-app
+npx create-next-app@latest my-nextjs15-app \
+  --typescript \
+  --tailwind \
+  --eslint \
+  --app \
+  --src-dir \
+  --turbopack \
+  --no-import-alias
 ```
 
-During setup, you'll be asked several configuration questions:
+During setup, you would normally be prompted with configuration questions below. Running create-next-app with flags as above answers yes to all but alias (--no-import-alias):
 - Would you like to use TypeScript? (Yes/No)
 - Would you like to use ESLint? (Yes/No)
 - Would you like to use Tailwind CSS? (Yes/No)
@@ -26,12 +33,66 @@ cd my-next-app
 ## 3. Project Structure
 Basic structure of a Next.js app:
 
-- `app/` or `pages/` - Contains routes and pages
-- `public/` - Static assets (images, fonts, etc.)
-- `components/` - Reusable React components
-- `styles/` - CSS and styling files
-- `next.config.js` - Next.js configuration
-- `package.json` - Project dependencies and scripts
+my-nextjs15-app/
+├── .gitignore
+├── README.md
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── .eslintrc.json
+├── public/
+│   ├── favicon.ico
+│   └── vercel.svg
+└── src/
+    ├── app/                ← App Router  
+    │   ├── globals.css     ← Tailwind’s base imports  
+    │   ├── layout.tsx      ← Root layout & meta  
+    │   └── page.tsx        ← Home page  
+    ├── components/         ← Your React components  
+    │   └── Example.tsx  
+    └── styles/             ← Module & utility CSS  
+        ├── globals.css     ← (if you split CSS here)  
+        └── Home.module.css
+
+Here’s what your project will look like, with everything under src/ and Tailwind + Turbopack enabled, no import alias:
+
+my-nextjs15-app/
+├── .gitignore
+├── README.md
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── .eslintrc.json
+├── public/
+│   ├── favicon.ico
+│   └── vercel.svg
+└── src/
+    ├── app/                ← App Router  
+    │   ├── globals.css     ← Tailwind’s base imports  
+    │   ├── layout.tsx      ← Root layout & meta  
+    │   └── page.tsx        ← Home page  
+    ├── components/         ← Your React components  
+    │   └── Example.tsx  
+    └── styles/             ← Module & utility CSS  
+        ├── globals.css     ← (if you split CSS here)  
+        └── Home.module.css
+.gitignore – ignores node_modules, .next, etc.
+
+next.config.js – Next.js configuration (Turbopack enabled under the hood).
+
+postcss.config.js & tailwind.config.js – Tailwind setup.
+
+tsconfig.json – TypeScript settings (no custom import aliases).
+
+.eslintrc.json – ESLint rules.
+
+public/ – Static assets (favicon, logos, etc.).
+
+Everything you write (pages, components, styles) lives inside src/. You can now:       
 
 ## 4. Run the Development Server
 ```bash
