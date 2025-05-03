@@ -17,7 +17,6 @@ npx create-next-app@latest my-nextjs15-app \
   --turbopack \
   --no-import-alias
 ```
-
 During setup, you would normally be prompted with configuration questions below. Running create-next-app with flags as above answers yes to all but alias (--no-import-alias):
 - Would you like to use TypeScript? (Yes/No)
 - Would you like to use ESLint? (Yes/No)
