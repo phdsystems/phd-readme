@@ -56,7 +56,7 @@ my-nextjs15-app/
         └── Home.module.css
 
 Here’s what your project will look like, with everything under src/ and Tailwind + Turbopack enabled, no import alias:
-
+```
 my-nextjs15-app/
 ├── .gitignore
 ├── README.md
@@ -79,6 +79,8 @@ my-nextjs15-app/
     └── styles/             ← Module & utility CSS  
         ├── globals.css     ← (if you split CSS here)  
         └── Home.module.css
+```
+
 .gitignore – ignores node_modules, .next, etc.
 
 next.config.js – Next.js configuration (Turbopack enabled under the hood).
