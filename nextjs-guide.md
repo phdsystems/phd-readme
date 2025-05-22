@@ -329,5 +329,5 @@ function MyComponent() {
 - `npx next info` — show environment info
 
 ## 17. Troubleshooting
-- Tailwind stylesheet tends to be problematic being located. In Next.js 14 replace globals.css content with just @import "tailwindcss"; You don't need tailwind.config.js
+- Tailwind stylesheet tends to be problematic being located. Tailwind v4 recommends a single import instead of the three directives you have. Replace the contents of your globals.css with:@import "tailwindcss"; You don't need tailwind.config.js
   
