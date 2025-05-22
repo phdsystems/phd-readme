@@ -327,3 +327,7 @@ function MyComponent() {
 - `npm run lint` — run ESLint
 - `npx @next/codemod@latest upgrade` — upgrade to latest Next.js version
 - `npx next info` — show environment info
+
+## 17. Troubleshooting
+- Tailwind stylesheet tends to be problematic being located. In Next.js 14 replace globals.css content with just @import "tailwindcss"; You don't need tailwind.config.js
+  
