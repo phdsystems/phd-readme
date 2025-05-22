@@ -9,13 +9,13 @@
 Use the official `create-next-app` tool with flags to skip prompts:
 
 ```bash
-npx create-next-app@latest my-nextjs15-app \
+npx create-next-app@latest phd-next \
   --typescript \
   --tailwind \
   --eslint \
   --app \
   --src-dir \
-  --turbo \
+  --turbopack \
   --no-import-alias
 ```
 
