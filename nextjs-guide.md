@@ -18,8 +18,7 @@ npx create-next-app@latest phd-next \
   --turbopack \
   --no-import-alias
 
-
-The --api flag tells the Next.js CLI to scaffold a minimal API endpoint for you in the new project.
+If specified, the --api flag tells the Next.js CLI to scaffold a minimal API endpoint for you in the new project.
 ```
 
 This answers "Yes" to TypeScript, Tailwind CSS, ESLint, App Router, Turbo (for Turbopack), and "No" to customizing the import alias.
