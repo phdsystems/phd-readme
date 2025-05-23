@@ -319,6 +319,7 @@ function MyComponent() {
 ## 16. Common Next.js Commands
 
 - `npx create-next-app@latest` — create a new project
+- npx prettier --write
 - `npm run dev` — start dev server
 - `npm run dev --turbo` — start dev server with Turbopack
 - `npm run build` — build for production
